@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: files
+        name: get changed files
         uses: jitterbit/get-changed-files@v1
         with:
           format: 'json'
@@ -29,11 +30,14 @@ jobs:
           done
       - name: checkout
         uses: actions/checkout@v3
-      - name: exit fast if tag exists
+      - name: release
         run: |
           git fetch --depth=1 --tags
 
-          if [[ ! $(git tag -l "${{env.tag}}") ]]; then
+          if [[ $(git tag -l "${{env.tag}}") ]]
+          then
+            echo release exists; skipping
+          else
             gh release create "${{env.tag}}"
           fi
         env:
