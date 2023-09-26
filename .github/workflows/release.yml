@@ -11,7 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: get changed files
+      - id: files
         uses: jitterbit/get-changed-files@v1
         with:
           format: 'json'
@@ -27,9 +27,9 @@ jobs:
               break
             fi
           done
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v3
-      - name: fetch tags
+      - name: Fetch tags
         run: git fetch --depth=1 --tags
       # - name: exit fast if tag exists
       - run: |
