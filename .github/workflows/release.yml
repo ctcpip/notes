@@ -38,15 +38,6 @@ jobs:
             gh run cancel ${{ github.run_id }}
             gh run watch ${{ github.run_id }}
           fi
+          gh release create "${{env.tag}}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: tag
-        uses: mathieudutour/github-tag-action@v6.1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          custom_tag: ${{env.tag}}
-          tag_prefix:
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{env.tag}}
