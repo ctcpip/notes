@@ -27,12 +27,12 @@ jobs:
               break
             fi
           done
-      - name: Checkout
+      - name: checkout
         uses: actions/checkout@v3
-      - name: Fetch tags
-        run: git fetch --depth=1 --tags
       # - name: exit fast if tag exists
       - run: |
+          git fetch --depth=1 --tags
+
           if [[ ! $(git tag -l "${{env.tag}}") ]]; then
             gh release create "${{env.tag}}"
           fi
